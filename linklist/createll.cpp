@@ -1,0 +1,130 @@
+#include<bits\stdc++.h>
+using namespace std;
+
+class node{
+public:
+	int data;
+	node* next;
+
+	node(int val)
+	{
+		data=val;
+		next = NULL;
+	}
+};
+
+void insertAtHead(node* &head,int val)
+{
+	node* n = new node(val);
+	n->next=head;
+	head=n;
+}
+
+void insertAtTail(node* &head,int val)
+{
+	node* n = new node(val);
+
+	if(head==NULL)
+	{
+		head=n;
+		return;
+	}
+
+	node* temp = head;
+
+	while(temp->next != NULL){
+		temp = temp->next;
+	} 
+	temp->next=n;
+}
+
+void deleteHead(node* &head)
+{
+	node* toDelete = head;
+
+	head = head->next;
+
+	delete toDelete; 
+}
+
+void deletion(node* &head , int val)
+{
+
+	if(head==NULL)
+	{
+		return;
+	}
+	if(head->next==NULL)
+	{
+		deleteHead(head);
+	}
+	node* temp = head;
+	while(temp->next->data != val)
+	{
+		temp=temp->next;
+	}
+	node* toDelete = temp->next;
+	temp->next = temp->next->next;
+	delete toDelete;
+}
+
+node* reverse(node* &head)
+{
+	node* perev = NULL;
+	node* currunt = head;
+	node* next;
+
+	while(currunt!= NULL)
+	{
+		next = currunt->next;
+		currunt->next = perev;
+
+		perev=currunt;
+		currunt=next;
+	}
+
+	return perev;
+
+
+}
+
+void display(node* head)
+{
+	node* temp = head;
+	while(temp != NULL)
+	{
+		cout<<temp->data<<"->";
+		temp = temp->next;
+	}
+	cout<<"NULL"<<endl;
+}
+
+bool search(node* head,int key)
+{
+	
+	while(head != NULL)
+	{
+		if(head->data==key)
+		{
+			return true;
+		}
+		head = head->next;
+	}
+
+	return false;
+}
+
+
+int main()
+{
+	node* head=NULL;
+	insertAtTail(head,1);
+	insertAtTail(head,2);
+	insertAtTail(head,3);
+	insertAtTail(head,4);
+	node* newhead = reverse(head);
+	display(newhead);
+	cout<<search(head,2)<<endl;
+	return 0;
+}
+
